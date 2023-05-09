@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title>Ice Incremental</title>
+        <link rel="stylesheet" href="index.css">
+    </head>
+    <body onload="loadStats()">
+        <div id="ice-counter">
+            Ice Count: 0
+        </div>
+        <div id="water-counter">
+            Water Count: 0
+        </div>
+        <div id="buttons">
+            <button id="increment" onclick="increment()"> Increment Ice </button>
+            <button id="save-button" onclick="saveStats()"> SAVE DATA </button>
+        </div>
+        <div>
+            <button id="water-reset" onclick="PLAYER.water.reset()">Reset your ice for 0 Water</button>
+        </div>
+        <script src="main.js"></script>
+    </body>
+</html>
