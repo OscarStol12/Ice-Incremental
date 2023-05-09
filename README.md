@@ -9,5 +9,5 @@ This webgame is based on a text-based game on discord, simply called Ice.
 - And get the most ice in the world!
 
 # Links
-Play Here: https://oscarstol12.github.io/Ice-Incremental/
-Discord Server: https://discord.gg/tzE3evWPfc
+ - Play Here: https://oscarstol12.github.io/Ice-Incremental/
+ - Discord Server: https://discord.gg/tzE3evWPfc
