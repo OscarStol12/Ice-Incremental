@@ -42,6 +42,18 @@ button#water-reset {
     border-radius: 5px;
 }
 
+button#sf-buyer {
+    border: black;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+    width: 250px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
 div#ice-counter {
     font-family: 'Times New Roman', Times, serif;
     font-size: 22px;
@@ -50,10 +62,42 @@ div#ice-counter {
     text-align: center;
 }
 
+div#hypervolume {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: rgb(65, 78, 84);
+    text-align: center;
+}
+
 div#water-counter {
     font-family: 'Times New Roman', Times, serif;
     font-size: 22px;
     font-weight: bold;
     color: rgb(4, 147, 213);
+    text-align: center;
+}
+
+div#snowflake {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 22px;
+    font-weight: bold;
+    color: rgb(63, 139, 73);
+    text-align: center;
+}
+
+div#sf-boosts {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 22px;
+    font-weight: bold;
+    color: rgb(63, 139, 73);
+    text-align: center;
+}
+
+div#info {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 30px;
+    font-weight: bold;
+    color: rgb(0, 0, 0);
     text-align: center;
 }
