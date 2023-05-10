@@ -1,22 +1,39 @@
 <html>
     <head>
         <title>Ice Incremental</title>
+        <meta charset="UTF-8">
         <link rel="stylesheet" href="index.css">
     </head>
     <body onload="loadStats()">
+        <div id="info">
+            Current Version: 0.0.1α
+        </div>
         <div id="ice-counter">
             Ice Count: 0
+        </div>
+        <div id="hypervolume">
+            Ice Hypervolume: 0 (Ice^4)
         </div>
         <div id="water-counter">
             Water Count: 0
         </div>
-        <div id="buttons">
+        <div>
             <button id="increment" onclick="increment()"> Increment Ice </button>
             <button id="save-button" onclick="saveStats()"> SAVE DATA </button>
         </div>
         <div>
             <button id="water-reset" onclick="PLAYER.water.reset()">Reset your ice for 0 Water</button>
         </div>
+        <div id="snowflake"> 
+            You currently have 1 Snowflakes 
+        </div>
+        <div id="sf-boosts"> 
+            Your snowflakes are giving you a 1x boost to Ice gain
+        </div>
+        <button id="sf-buyer" onclick="PLAYER.snowflakes.buy()">
+            Buy one snowflake for 0 Ice Hypervolume
+        </button>
         <script src="main.js"></script>
+        <script src="break_eternity.js"></script>
     </body>
 </html>
