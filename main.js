@@ -1,155 +1,59 @@
-const STORAGE = {
-    ice: Number(localStorage.getItem("Ice")),
-    water: Number(localStorage.getItem("Water")),
-    hypervolume: Number(localStorage.getItem("Hypervolume")),
-    snowflakes: Number(localStorage.getItem("Snowflakes")) || 1,
-
-    upgrades: {
-
-    },
-}
-
-const UPGRADES = {
-
-}
+function E(x) {return ExpantaNum(x)}
 
 const PLAYER = {
     ice: {
+        value: E(0),
         gain() {
-            let x = 1
+            let x = E(1)
 
-            if (PLAYER.water.value > 0) {
-                let watergainformula = 1+(Math.pow(PLAYER.water.value,0.5))
-                x += watergainformula
-            }
-
-            if (PLAYER.snowflakes.amount > 0) {
-                x *= Math.pow(PLAYER.snowflakes.amount,2)
-            }
-
-            PLAYER.ice.hypervolume.value = PLAYER.ice.hypervolume.get()
-            PLAYER.ice.hypervolume.update()
+            if (PLAYER.water.value.gte(1)) x = x.add(E(1).add(PLAYER.water.value.pow(0.5)))
+            if (PLAYER.snowflakes.amount.gte(2)) x = x.mul(PLAYER.snowflakes.amount.pow(PLAYER.snowflakes.exponent))
             return x
         },
-
-        update() {
-            document.getElementById("ice-counter").innerText = `Ice Count: ${Math.trunc(PLAYER.ice.value)}`
-            PLAYER.water.update.gainOnReset()
-        },
-
-        hypervolume: {
-            get() {
-                return Math.pow(PLAYER.ice.value,4)
-            },
-
-            update() {
-                document.getElementById("hypervolume").innerText = `Ice Hypervolume: ${Math.trunc(PLAYER.ice.hypervolume.value)} (Ice^4)`
-            },
-
-            value: 0
-        },
-
-        value: 0,
-    }, 
+        hypervolume() {return PLAYER.ice.value.pow(4)},
+    },
 
     water: {
+        reset(boosts = true) {
+            if (PLAYER.ice.value.gte(100) && boosts) {
+                PLAYER.water.value = PLAYER.water.value.add(PLAYER.water.gain()) 
+                PLAYER.ice.value = E(0)
+            } else if (!boosts) {
+                PLAYER.ice.value = E(0)
+            }
+
+            TMP.water.update()
+            TMP.ice.update()
+            TMP.ice.updateHyper()
+            TMP.water.updateGain()
+        },
         gain() {
-            let x = 0
-
-            let baseformula = Math.floor(PLAYER.ice.value/100)
-            x += baseformula
-
-            return x
+            let x = PLAYER.ice.value
+            x = x.div(100)
+            return x.floor()
         },
-
-        reset() {
-            if (PLAYER.ice.value >= 100) {
-                PLAYER.water.value += PLAYER.water.gain()
-                PLAYER.ice.value = 0
-                PLAYER.ice.update()
-                PLAYER.water.update.value()
-            }
-        },
-
-        update: {
-            gainOnReset() {
-                document.getElementById("water-reset").innerText = `Reset your ice for ${PLAYER.water.gain()} Water`
-            },
-
-            value() {
-                document.getElementById("water-counter").innerText = `Water Count: ${PLAYER.water.value}`
-            }
-        },
-
-        value: 0,
+        value: E(0),
     },
 
     snowflakes: {
+        amount: E(1),
+        exponent: E(1),
+        cost() {return E('1e4').pow(PLAYER.snowflakes.amount.add(1))},
         buy() {
-            let cost = PLAYER.snowflakes.calCost()
-
-            if (PLAYER.ice.hypervolume.value >= cost) {
-                PLAYER.snowflakes.amount++
+            if (PLAYER.ice.hypervolume().gte(PLAYER.snowflakes.cost())) {
+                PLAYER.snowflakes.amount = PLAYER.snowflakes.amount.add(1)
+                TMP.snowflakes.update()
+                TMP.snowflakes.updateBoost()
+                TMP.snowflakes.updateCost()
             }
-
-            PLAYER.snowflakes.update()
         },
-
-        calCost() {
-            let cost = Math.pow(100,4)
-
-            if (PLAYER.snowflakes.amount > 0) {
-                cost *= (Math.pow(1e4,(PLAYER.snowflakes.amount-1)))
-            }
-
-            return cost
-        },
-
-        boost() {
-            return Math.pow(PLAYER.snowflakes.amount,2)
-        },
-
-        update() {
-            document.getElementById("snowflake").innerText = `You currently have ${PLAYER.snowflakes.amount} Snowflakes`
-            document.getElementById("sf-boosts").innerText = `Your snowflakes are giving you a ${PLAYER.snowflakes.boost()}x boost to Ice gain`
-            document.getElementById("sf-buyer").innerText = `Buy one snowflake for ${PLAYER.snowflakes.calCost()} Ice Hypervolume`
-        },
- 
-        amount: 1
-    }
-}
-
-function wipe() {
-    PLAYER.water.value = 0
-    PLAYER.ice.value = 0
-    PLAYER.snowflakes.amount = 1
-   
-    localStorage.setItem("Snowflakes", 1)
-    localStorage.setItem("Water",0)
-    localStorage.setItem("Ice",0)
-
-    PLAYER.ice.update()
-    PLAYER.water.update.value()
-    PLAYER.ice.hypervolume.update()
-}
-
-function saveStats() {
-    localStorage.setItem("Hypervolume",PLAYER.ice.hypervolume.value)
-    localStorage.setItem("Snowflakes",PLAYER.snowflakes.amount)
-    localStorage.setItem("Water",PLAYER.water.value)
-    localStorage.setItem("Ice", PLAYER.ice.value)
-}
-
-function loadStats() {
-    PLAYER.ice.value = STORAGE.ice
-    PLAYER.water.value = STORAGE.water
-    PLAYER.snowflakes.amount = STORAGE.snowflakes
-    PLAYER.ice.update()
-    PLAYER.water.update.value()
-    PLAYER.snowflakes.update()
+        boost() {return PLAYER.snowflakes.amount.pow(PLAYER.snowflakes.exponent)},
+    },
 }
 
 function increment() {
-    PLAYER.ice.value += PLAYER.ice.gain()
-    PLAYER.ice.update()
+    PLAYER.ice.value = PLAYER.ice.value.add(PLAYER.ice.gain())
+    TMP.ice.update()
+    TMP.ice.updateHyper()
+    TMP.water.updateGain()
 }
