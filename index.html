@@ -1,42 +1,111 @@
-<html>
+<!DOCTYPE html>
+<html lang="en" prefix="og: https://ogp.me/ns#">
     <head>
-        <title>Ice Incremental</title>
-        <meta charset="UTF-8">
-        <link rel="stylesheet" href="index.css">
-        <script src="ExpantaNum.js"></script>
-        <script src="main.js"></script>
-        <script src="temp.js"></script>
-        <script src="saves.js"></script>
+        <title> Ice Incremental </title>
 
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Ice Incremental, by OscarStol12.">
+
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://oscarstol12.github.io/Ice-Incremental/">
+        <meta property="og:title" content="Ice Incremental v.0.0.2α">
+        <meta property="og:description" content="Ice Incremental is a web-game that is inspired by a text-based discord game simply called Ice.">
+        <meta property="og:image" content="https://oscarstol12.github.io/Ice-Incremental//images/ice.jpg">
+
+        <link rel="stylesheet" href="index.css">
+
+        <script src="ExpantaNum.js"></script>
+        <script src="js/format.js"></script>
+        <script src="js/main.js"></script>
+        <script src="js/challenges.js"></script>
+        <script src="js/upgrades.js"></script>
+        <script src="js/temp.js"></script>
+        <script src="js/saves.js"></script>
     </head>
     <body onload="loadStats()">
-        <div id="info">
-            Current Version: 0.0.1.1α
+        <div id="loading">
+            Loading game.... Be patient!
+
+            (If you're stuck on this page, loading is either taking very long or something is broken.)
         </div>
-        <div id="ice-div" class="counters">
-            Ice Count: <span id="ice-counter">0</span>
+        <div id="leftsheet" style="visibility: hidden;">
+            <button class="ls_btn" onclick="loadTab()"> Main </button>
+            <div></div>
+            <button class="ls_btn" onclick="loadTab('settings')"> Settings </button>
+            <div></div>
+            <button class="ls_btn" onclick="loadTab('chals')"> Challenges </button>
+            <div></div>
+            <button class="ls_btn" onclick="loadTab('upgs')"> Upgrades </button>
         </div>
-        <div id="hyp-div" class="counters">
-            Ice Hypervolume: <span id="hypervolume">0</span> (Ice^4)
+        <!-- Main tab -->
+        <div id="main" style="visibility: hidden;">
+            <!--Header subtab-->
+            <div id="main-hdr">
+                <button class="main_btn" onclick="TABS.main.loadSubTab('ice')"> Ice </button>
+                <button class="main_btn" onclick="TABS.main.loadSubTab('snowflakes')"> Snowflakes </button>
+            </div>
+            <!--Ice subtab-->
+            <div id="ice-sbtb">
+                <br> <span class="ice_txt" style="color: rgba(16, 33, 161, 0.688);"> Ice Count: <span id="ice-counter">0</span></span>
+                <br> <span class="ice_txt" style="color: rgba(80, 92, 185, 0.779);"> <br> Ice Hypervolume: <span id="hypervolume">0</span> (Ice<sup>4</sup>)</span>
+                <br> <button class="ice_btn" onclick="increment()"> Increment </button>
+                <br> <span class="ice_txt" style="top: 21%; color: rgba(33, 57, 245, 0.91);"> Water Count: <span id="water-counter">0</span></span>
+                <br> <span class="ice_txt" style="top: 23%; color: rgba(0, 0, 255, 0.80);"> You will gain <span id="water-gain">0</span> water upon reset</span>
+                <br> <button class="ice_btn" style="top: 27%;" onclick="PLAYER.water.reset()"> Reset </button>
+            </div>
+            <!--Snowflakes subtab-->
+            <div id="sf-sbtb" style="visibility: hidden;">
+                <div class="sf_txt" style="color: rgba(98, 165, 186, 0.804);"> You have <span id="snowflake">0</span> Snowflakes </div>
+                <div class="sf_txt" style="color: rgba(98, 165, 186, 0.804); top: 11%;"> Your snowflakes provide a <span id="sf-boosts">0</span>x multiplier to Ice gain</div>
+                <div class="sf_txt" style="color: rgba(98, 165, 186, 0.804); top: 13%;"> The next snowflake requires <span id="sf-cost">0</span> Hypervolume</div>
+                <button class="sf_btn" onclick="PLAYER.snowflakes.buy()"> Buy </button>
+            </div>
         </div>
-        <div id="water-div" class="counters">
-            Water Count: <span id="water-counter">0</span>
+        <!-- Settings tab -->
+        <div id="settings" style="visibility: hidden;">
+            <div class="set_txt"> Current version: 0.0.2α </div>
+            <button class="set_btn" onclick="saveStats()"> Save Data </button>
         </div>
-        <div>
-            <button id="increment" class="btns" onclick="increment()"> Increment Ice </button>
-            <button id="save-button" class="btns" onclick="saveStats()"> SAVE DATA </button>
+        <!-- Challenges tab -->
+        <div id="chals" style="visibility: hidden;">
+            <button class="chal_sct" onclick="updateChallengeHTML(1)"> Challenge 1 </button>
+            <button class="chal_sct" onclick="updateChallengeHTML(2)"> Challenge 2 </button>
+            <div id="chal-txt"></div>
+            <button id="chal-btn" onclick="enterChallenge(CHALS.selected)"> Enter </button>
         </div>
-        <div>
-            <button id="water-reset" class="btns" onclick="PLAYER.water.reset()">Reset your ice for <span id="water-gain">0</span> Water</button>
+        <!-- Upgrades tab -->
+        <div id="upgrades" style="visibility: hidden;">
+            <div id="upg-hdr" style="top: 3%;">
+                <button class="upg_hdr_btn" onclick="TABS.upgrades.loadSubTab('upgs')"> Upgrades </button>
+                <button class="upg_hdr_btn" onclick="TABS.upgrades.loadSubTab('hyper')"> Hyperboosters </button>
+            </div>
+            <!-- Upgrades subtab -->
+            <div id="upgs-sbtb">
+                <div class="upg_txt">
+                    Upgrade 1
+                    <br> For every challenge completion, increase Ice gain by <span id="upg-1-eff">0</span>x compounding.
+                    <br> Cost: 100 Water
+                    <br> <button id="upg-1-btn" class="upg_btn"> Buy </button>
+                </div>
+            </div>
+            <!-- Hyperboosters subtab -->
+            <div id="hyper-sbtb" style="visibility: hidden;">
+                <div class="hyper_txt" style="top: 10%;">
+                    Snowflake Booster
+                    <br> Increase the exponent of Snowflake's effect.
+                    <br> Current effect: +<sup id="sf-hyp-eff">0</sup> to Snowflake effect
+                    <br> Cost: <span id="sf-hyp-cost">0</span> Snowflakes
+                    <br> <button id="sf-hyp-btn" class="upg_btn" onclick="HYPERBOOSTERS.snowflakes.buy()"> Buy </button>
+                </div>
+                <div class="hyper_txt" style="top: 10%;">
+                    Water Booster
+                    <br> Make water's effect better.
+                    <br> Current effect: Exponent is <span id="water-hyp-eff">0</span>
+                    <br> Cost: <span id="water-hyp-cost">0</span> Water
+                    <br> <button id="water-hyp-btn" class="upg_btn" onclick="HYPERBOOSTERS.water.buy()"> Buy </button>
+                </div>
+            </div>
         </div>
-        <div id="sf-div" class="counters"> 
-            You currently have <span id="snowflake">1</span> Snowflakes 
-        </div>
-        <div id="sf-boosts-div" class="counters"> 
-            Your snowflakes are giving you a <span id="sf-boosts">1</span>x boost to Ice gain
-        </div>
-        <button id="sf-buyer" class="btns" style.font-size="16px;" onclick="PLAYER.snowflakes.buy()">
-            Buy one snowflake for <span id="sf-cost">0</span> Ice Hypervolume
-        </button>
     </body>
 </html>
