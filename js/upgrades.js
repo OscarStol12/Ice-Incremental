@@ -50,7 +50,7 @@ const UPGRADES = {
         bought: 0,
         cost() {return E(5)},
         buy() {
-            if (PLAYER.water.value.gte(UPGRADES[1].cost())) {
+            if (PLAYER.water.value.gte(UPGRADES[1].cost()) && UPGRADES[1].unlocked()) {
                 PLAYER.water.value = PLAYER.water.value.sub(UPGRADES[1].cost())
                 UPGRADES[1].bought = 1
             }
