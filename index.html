@@ -7,9 +7,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="Ice Incremental, by OscarStol12.">
 
+        <link rel="icon" type="image/png" href="images/ice.jpg">
+
         <meta property="og:type" content="website">
         <meta property="og:url" content="https://oscarstol12.github.io/Ice-Incremental/">
-        <meta property="og:title" content="Ice Incremental v.0.0.2.1α">
+        <meta property="og:title" content="Ice Incremental v.0.0.2α">
         <meta property="og:description" content="Ice Incremental is a web-game that is inspired by a text-based discord game simply called Ice.">
         <meta property="og:image" content="https://oscarstol12.github.io/Ice-Incremental//images/ice.jpg">
 
@@ -49,30 +51,30 @@
             <div id="ice-sbtb">
                 <br> <span class="ice_txt" style="color: rgba(16, 33, 161, 0.688);"> Ice Count: <span id="ice-counter">0</span></span>
                 <br> <span class="ice_txt" style="color: rgba(80, 92, 185, 0.779);"> <br> Ice Hypervolume: <span id="hypervolume">0</span> (Ice<sup>4</sup>)</span>
-                <br> <button class="ice_btn" onclick="increment()"> Increment </button>
-                <br> <span class="ice_txt" style="top: 21%; color: rgba(33, 57, 245, 0.91);"> Water Count: <span id="water-counter">0</span></span>
-                <br> <span class="ice_txt" style="top: 23%; color: rgba(0, 0, 255, 0.80);"> You will gain <span id="water-gain">0</span> water upon reset</span>
-                <br> <button class="ice_btn" style="top: 27%;" onclick="PLAYER.water.reset()"> Reset </button>
+                <br> <button class="ice_btn" style="top: calc(9% + 75px);" onclick="increment()"> Increment </button>
+                <br> <span class="ice_txt" style="top: calc(9% + 140px); color: rgba(33, 57, 245, 0.91);"> Water Count: <span id="water-counter">0</span></span>
+                <br> <span class="ice_txt" style="top: calc(9% + 165px); color: rgba(0, 0, 255, 0.80);"> You will gain <span id="water-gain">0</span> water upon reset</span>
+                <br> <button class="ice_btn" style="top: calc(9% + 200px);" onclick="PLAYER.water.reset()"> Reset </button>
             </div>
             <!--Snowflakes subtab-->
             <div id="sf-sbtb" style="visibility: hidden;">
                 <div class="sf_txt" style="color: rgba(98, 165, 186, 0.804);"> You have <span id="snowflake">0</span> Snowflakes </div>
-                <div class="sf_txt" style="color: rgba(98, 165, 186, 0.804); top: 11%;"> Your snowflakes provide a <span id="sf-boosts">0</span>x multiplier to Ice gain</div>
-                <div class="sf_txt" style="color: rgba(98, 165, 186, 0.804); top: 13%;"> The next snowflake requires <span id="sf-cost">0</span> Hypervolume</div>
-                <button class="sf_btn" onclick="PLAYER.snowflakes.buy()"> Buy </button>
+                <div class="sf_txt" style="color: rgba(98, 165, 186, 0.804); top: calc(9% + 32px);"> Your snowflakes provide a <span id="sf-boosts">0</span>x multiplier to Ice gain</div>
+                <div class="sf_txt" style="color: rgba(98, 165, 186, 0.804); top: calc(9% + 57px);"> The next snowflake requires <span id="sf-cost">0</span> Hypervolume</div>
+                <button class="sf_btn" style="top: calc(9% + 90px);" onclick="PLAYER.snowflakes.buy()"> Buy </button>
             </div>
         </div>
         <!-- Settings tab -->
         <div id="settings" style="visibility: hidden;">
-            <div class="set_txt"> Current version: 0.0.2.1α </div>
+            <div class="set_txt"> Current version: 0.0.3α </div>
             <button class="set_btn" onclick="saveStats()"> Save Data </button>
         </div>
         <!-- Challenges tab -->
         <div id="chals" style="visibility: hidden;">
-            <button class="chal_sct" onclick="updateChallengeHTML(1)"> Challenge 1 </button>
+            <button id="chal-btn" onclick="enterChallenge(CHALS.selected)"> Enter </button>
+            <br> <button class="chal_sct" onclick="updateChallengeHTML(1)"> Challenge 1 </button>
             <button class="chal_sct" onclick="updateChallengeHTML(2)"> Challenge 2 </button>
             <div id="chal-txt"></div>
-            <button id="chal-btn" onclick="enterChallenge(CHALS.selected)"> Enter </button>
         </div>
         <!-- Upgrades tab -->
         <div id="upgrades" style="visibility: hidden;">
